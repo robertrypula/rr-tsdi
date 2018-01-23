@@ -4,6 +4,9 @@ export interface InjectorInterface {
     registerService(name: string, serviceItem: any): void;
     get(name: string): any;
 }
+export interface InjectorStatic {
+    new (): InjectorInterface;
+}
 export declare class Injector implements InjectorInterface {
     private injectRepository;
     private resolveRecursionCounter;

@@ -4,7 +4,7 @@ RrTsdi
 This library is very simple implementation of Dependency Injection container
 for TypeScript.
 
-```
+```javascript
 var injector = new RrTsdi.Injector();
 
 // ----------------------------

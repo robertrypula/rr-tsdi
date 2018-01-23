@@ -1,8 +1,14 @@
+import staticImplements from './static-implements';
+
 export interface InjectorInterface {
   registerValue(name: string, valueItem: any): void;
   registerClass(name: string, classItem: any): void;
   registerService(name: string, serviceItem: any): void;
   get(name: string): any
+}
+
+export interface InjectorStatic {
+  new(): InjectorInterface;
 }
 
 enum ItemType {
@@ -17,6 +23,7 @@ interface InjectRepositoryEntryInterface {
   resolveCache: any
 }
 
+@staticImplements<InjectorStatic>()
 export class Injector implements InjectorInterface {
 
   private injectRepository: { [name: string]: InjectRepositoryEntryInterface };
