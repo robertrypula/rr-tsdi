@@ -2,7 +2,15 @@ RrTsdi
 ======
 
 This library is very simple implementation of Dependency Injection
-container for TypeScript.
+written in TypeScript.
+
+## Installation
+
+Install as npm package:
+
+```
+npm install rr-tsdi --save
+```
 
 ## Usage (TypeScript)
 
@@ -46,7 +54,7 @@ injector.registerValue(CONFIG, config);
 
 // ----------------------------
 
-var util: Util = injector.get(UTIL);
+const util: Util = injector.get(UTIL);
 
 util.login();
 
