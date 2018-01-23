@@ -1,8 +1,58 @@
 RrTsdi
 ======
 
-This library is very simple implementation of Dependency Injection container
-for TypeScript.
+This library is very simple implementation of Dependency Injection
+container for TypeScript.
+
+## Usage (TypeScript)
+
+```typescript
+import { Injector, InjectorInterface } from './injector';
+
+const injector: InjectorInterface = new Injector();
+
+// ----------------------------
+
+const
+  CONFIG = 'config',
+  UTIL = 'util';
+
+// ----------------------------
+
+class Util {
+
+  private config: any;
+  static $inject = [CONFIG];
+
+  constructor (config: any) {
+    this.config = config;
+  }
+  
+  login(): void {
+    alert(this.config.login + ' ' + this.config.password);
+  }
+}
+
+injector.registerService(UTIL, Util);
+
+// ----------------------------
+
+const config: any = {
+  login: 'john',
+  password: 'myp4$w0rd'
+};
+
+injector.registerValue(CONFIG, config);
+
+// ----------------------------
+
+var util: Util = injector.get(UTIL);
+
+util.login();
+
+```
+
+## Usage directly in the browser (ES5)
 
 ```javascript
 var injector = new RrTsdi.Injector();
