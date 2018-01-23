@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RrTsdi - example</title>
+
+  <script src="../dist/rr-tsdi-v1.0.0.js"></script>
+  <script>
+    var injector = new RrTsdi.Injector();
+
+    // ----------------------------
+
+    var
+      CONFIG = 'config',
+      UTIL = 'util';
+
+    // ----------------------------
+
+    function Util(config) {
+      this.config = config;
+    }
+
+    Util.$inject = [CONFIG];
+
+    Util.prototype.login = function () {
+      alert(this.config.login + ' ' + this.config.password);
+    }
+
+    injector.registerService(UTIL, Util);
+
+    // ----------------------------
+
+    var config = {
+      login: 'john',
+      password: 'myp4$w0rd'
+    };
+    
+    injector.registerValue(CONFIG, config);
+    
+    // ----------------------------
+
+    var util = injector.get(UTIL);
+
+    util.login();
+  </script>
+</head>
+<body>
+</body>
+</html>
