@@ -1,1 +1,2 @@
-export { Injector, InjectorInterface } from './injector';
+export { Injector, InjectorInterface, InjectorStatic } from './injector';
+export * from './static-implements';
