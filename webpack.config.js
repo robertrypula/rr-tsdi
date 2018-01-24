@@ -13,10 +13,10 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ]
+    extensions: [ '.ts', 'js' ]
   },
   output: {
-    filename: 'rr-tsdi-v1.0.0.js',
+    filename: 'rr-tsdi-v1.0.1.js',
     library: 'RrTsdi',
     path: path.resolve(__dirname, 'dist')
   }
