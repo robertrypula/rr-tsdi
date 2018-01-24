@@ -16,8 +16,9 @@ module.exports = {
     extensions: [ '.ts', 'js' ]
   },
   output: {
-    filename: 'rr-tsdi-v1.0.1.js',
+    filename: 'rr-tsdi-v1.0.2.js',
     library: 'RrTsdi',
+    libraryTarget: 'umd',
     path: path.resolve(__dirname, 'dist')
   }
 };

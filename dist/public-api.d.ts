@@ -1,2 +1,3 @@
+import staticImplements from './static-implements';
 export { Injector, InjectorInterface, InjectorStatic } from './injector';
-export * from './static-implements';
+export { staticImplements };
