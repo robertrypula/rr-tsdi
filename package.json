@@ -1,6 +1,6 @@
 {
   "name": "rr-tsdi",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Dependency Injection container for TypeScript",
   "main": "dist/rr-tsdi-v1.0.1.js",
   "types": "dist/index.d.ts",
