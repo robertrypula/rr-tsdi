@@ -1,5 +1,7 @@
 # RrTsdi
 
+[![Build Status](https://travis-ci.org/robertrypula/rr-tsdi.svg?branch=master)](https://travis-ci.org/robertrypula/rr-tsdi)
+
 This library is very simple implementation of Dependency Injection
 written in TypeScript.
 
