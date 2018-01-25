@@ -30,16 +30,22 @@ describe('injector', () => {
     injector.registerValue('value', 'some value');
     injector.registerClass('MyClass', MyClass);
 
-    const MyClass_ = injector.get('MyClass');
-    const myClass: any = new MyClass_('test');
+    const MyClasss = injector.get('MyClass');
+    const myClass: any = new MyClasss('test');
 
     expect(myClass.getValue()).toBe('some value');
   });
 });
 
+/*
+  p00: any, p01: any, p02: any, p03: any,
+  p04: any, p05: any, p06: any, p07: any,
+  p08: any, p09: any, p10: any, p11: any
+*/
+
 class Service {
 
-  static $inject: string[] = ['value'];
+  public static $inject: string[] = ['value'];
 
   private value: string;
 
@@ -47,21 +53,18 @@ class Service {
     this.value = value;
   }
 
-  getValue(): string {
+  public getValue(): string {
     return this.value;
   }
 }
 
 const MyClass: any = function _MyClass(value: string) {
-  class __MyClass {
-    constructor() {
-    }
-
-    getValue(): string {
+  class MyClass {
+    public getValue(): string {
       return value;
     }
   }
 
-  return __MyClass;
-}
+  return MyClass;
+};
 MyClass.$inject = ['value'];

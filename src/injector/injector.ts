@@ -1,8 +1,8 @@
-import staticImplements from './../static-implements/static-implements';
 import {
   injectDependencies,
   injectDependenciesAndInstantiate
 } from './../injector-helpers/injector-helpers';
+import staticImplements from './../static-implements/static-implements';
 
 interface InjectorInterface {
   registerValue(name: string, valueItem: any): void;
@@ -12,19 +12,19 @@ interface InjectorInterface {
 }
 
 interface InjectorStatic {
-  new(): InjectorInterface;
+  new(recursionLimit: number): InjectorInterface;
 }
 
 enum ItemType {
   VALUE,
-  CLASS,
-  SERVICE
+  SERVICE,
+  CLASS
 }
 
 interface InjectRepositoryEntryInterface {
+  cache: any;
   item: any;
   itemType: ItemType;
-  resolveCache: any;
 }
 
 interface InjectRepositoryInterface {
@@ -40,43 +40,44 @@ const UNABLE_TO_FIND_ITEM_EXCEPTION: string = 'Unable to find factory/service fo
 @staticImplements<InjectorStatic>()
 class Injector implements InjectorInterface {
 
+  private recursionLimit: number;
   private injectRepository: InjectRepositoryInterface;
-  private resolveRecursionCounter: number;
+  private recursionCounter: number;
 
-  constructor() {
+  constructor(recursionLimit: number = RESOLVE_RECURSION_LIMIT) {
+    this.recursionLimit = recursionLimit;
     this.injectRepository = {};
-    this.resolveRecursionCounter = 0;
+    this.recursionCounter = 0;
   }
 
   public registerValue(name: string, valueItem: any): void {
     this.register(name, valueItem, ItemType.VALUE);
   }
 
-  public registerClass(name: string, classItem: any): void {
-    this.register(name, classItem, ItemType.CLASS);
-  }
-
   public registerService(name: string, serviceItem: any): void {
     this.register(name, serviceItem, ItemType.SERVICE);
   }
 
+  public registerClass(name: string, classItem: any): void {
+    this.register(name, classItem, ItemType.CLASS);
+  }
+
   public get(name: string): any {
     const injectList: any[] = [];
-    let
-      injectRepositoryEntry: InjectRepositoryEntryInterface,
-      itemType: ItemType,
-      i: number,
-      item: any;
+    let injectRepositoryEntry: InjectRepositoryEntryInterface;
+    let itemType: ItemType;
+    let i: number;
+    let item: any;
 
     injectRepositoryEntry = this.getInjectRepositoryEntry(name);
-    if (injectRepositoryEntry.resolveCache) {
-      return injectRepositoryEntry.resolveCache;
+    if (injectRepositoryEntry.cache) {
+      return injectRepositoryEntry.cache;
     }
 
     item = injectRepositoryEntry.item;
     itemType = injectRepositoryEntry.itemType;
 
-    this.resolveRecursionInc();
+    this.recursionInc();
     for (i = 0; item && item.$inject && (i < item.$inject.length); i++) {
       injectList.push(
         this.get(item.$inject[i])
@@ -84,18 +85,18 @@ class Injector implements InjectorInterface {
     }
     switch (itemType) {
       case ItemType.VALUE:
-        injectRepositoryEntry.resolveCache = item;
-        break;
-      case ItemType.CLASS:
-        injectRepositoryEntry.resolveCache = injectDependencies(item, injectList);
+        injectRepositoryEntry.cache = item;
         break;
       case ItemType.SERVICE:
-        injectRepositoryEntry.resolveCache = injectDependenciesAndInstantiate(item, injectList);
+        injectRepositoryEntry.cache = injectDependenciesAndInstantiate(item, injectList);
+        break;
+      case ItemType.CLASS:
+        injectRepositoryEntry.cache = injectDependencies(item, injectList);
         break;
     }
-    this.resolveRecursionDec();
+    this.recursionDec();
 
-    return injectRepositoryEntry.resolveCache;
+    return injectRepositoryEntry.cache;
   }
 
   private register(name: string, item: any, itemType: ItemType): void {
@@ -104,21 +105,21 @@ class Injector implements InjectorInterface {
     }
 
     this.injectRepository[name] = {
+      cache: null,
       item,
-      itemType,
-      resolveCache: null
+      itemType
     };
   }
 
-  private resolveRecursionInc(): void {
-    this.resolveRecursionCounter++;
-    if (this.resolveRecursionCounter >= RESOLVE_RECURSION_LIMIT) {
+  private recursionInc(): void {
+    this.recursionCounter++;
+    if (this.recursionCounter >= this.recursionLimit) {
       throw RESOLVE_RECURSION_LIMIT_EXCEED_EXCEPTION;
     }
   }
 
-  private resolveRecursionDec(): void {
-    this.resolveRecursionCounter--;
+  private recursionDec(): void {
+    this.recursionCounter--;
   }
 
   private getInjectRepositoryEntry(name: string): InjectRepositoryEntryInterface {
@@ -138,4 +139,4 @@ export {
   InjectorInterface,
   InjectorStatic,
   Injector
-}
+};

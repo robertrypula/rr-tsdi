@@ -20,7 +20,8 @@
     "quotemark": [
       true,
       "single"
-    ]
+    ],
+    "prefer-for-of": false
   },
   "rulesDirectory": []
 }

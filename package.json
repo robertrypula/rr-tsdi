@@ -4,10 +4,15 @@
   "description": "Dependency Injection container for TypeScript",
   "main": "dist/rr-tsdi-v1.0.1.js",
   "types": "dist/index.d.ts",
+  "watch": {
+    "lint": "src/**/*.ts"
+  },
   "scripts": {
     "build": "webpack",
-    "test": "jest --coverage --watch",
-    "lint": "tslint -c tslint.json 'src/**/*.ts'"
+    "test": "jest --coverage",
+    "test:watch": "jest --coverage --watch",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "watch": "npm-watch"
   },
   "jest": {
     "transform": {

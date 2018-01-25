@@ -18,7 +18,7 @@ describe('injector-helpers', () => {
   it('should fail when too many inject items are on the list (inject without instance)', () => {
     expect(
       () => {
-        let injectList = injectListGenerate(INJECT_LIST_LENGTH_LIMIT + 1);
+        const injectList = injectListGenerate(INJECT_LIST_LENGTH_LIMIT + 1);
 
         injectDependencies(wrapperFunction, injectList);
       }
@@ -39,7 +39,7 @@ describe('injector-helpers', () => {
   it('should fail when too many inject items are on the list (inject & instance)', () => {
     expect(
       () => {
-        let injectList = injectListGenerate(INJECT_LIST_LENGTH_LIMIT + 1);
+        const injectList = injectListGenerate(INJECT_LIST_LENGTH_LIMIT + 1);
 
         injectDependenciesAndInstantiate(factoryFunction, injectList);
       }
@@ -58,7 +58,7 @@ const injectListGenerate = (length: number): any[] => {
   }
 
   return injectList;
-}
+};
 
 const injectListJoin = (injectList: IArguments | any[]): string => {
   let result = '';
@@ -68,13 +68,7 @@ const injectListJoin = (injectList: IArguments | any[]): string => {
   }
 
   return result;
-}
-
-/*
-  p00: any, p01: any, p02: any, p03: any,
-  p04: any, p05: any, p06: any, p07: any,
-  p08: any, p09: any, p10: any, p11: any
-*/
+};
 
 const wrapperFunction = function() {
   return injectListJoin(arguments);

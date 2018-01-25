@@ -53,4 +53,4 @@ export {
   TO_MANY_INJECTIONS_EXCEPTION,
   injectDependenciesAndInstantiate,
   injectDependencies
-}
+};
