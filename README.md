@@ -1,5 +1,4 @@
-RrTsdi
-======
+# RrTsdi
 
 This library is very simple implementation of Dependency Injection
 written in TypeScript.
