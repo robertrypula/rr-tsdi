@@ -5,7 +5,6 @@ export interface InjectorInterface {
   registerClass(name: string, classItem: any): void;
   registerService(name: string, serviceItem: any): void;
   get(name: string): any;
-  forceBuildFail(travisTest: any): any;
 }
 
 export interface InjectorStatic {
