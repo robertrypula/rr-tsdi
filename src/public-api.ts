@@ -1,4 +1,4 @@
-import staticImplements from './static-implements';
+import staticImplements from './static-implements/static-implements';
 
-export { Injector, InjectorInterface, InjectorStatic } from './injector';
+export { Injector, InjectorInterface, InjectorStatic } from './injector/injector';
 export { staticImplements };

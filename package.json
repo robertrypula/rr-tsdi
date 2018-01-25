@@ -5,7 +5,24 @@
   "main": "dist/rr-tsdi-v1.0.1.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "test": "jest --coverage --watch",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "testEnvironment": "node"
   },
   "author": "Robert Rypuła",
   "license": "MIT",
@@ -22,7 +39,11 @@
     "TypeScript"
   ],
   "devDependencies": {
+    "@types/jest": "^22.1.0",
+    "jest": "^22.1.4",
+    "ts-jest": "^22.0.1",
     "ts-loader": "^3.2.0",
+    "tslint": "^5.9.1",
     "typescript": "^2.6.2",
     "webpack": "^3.10.0"
   }
