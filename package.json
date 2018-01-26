@@ -12,7 +12,8 @@
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "watch": "npm-watch"
+    "watch": "npm-watch",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls"
   },
   "jest": {
     "transform": {
@@ -45,6 +46,7 @@
   ],
   "devDependencies": {
     "@types/jest": "^22.1.0",
+    "coveralls": "^3.0.0",
     "jest": "^22.1.4",
     "ts-jest": "^22.0.1",
     "ts-loader": "^3.2.0",
