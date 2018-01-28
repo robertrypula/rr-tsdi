@@ -2,18 +2,19 @@
   "name": "rr-tsdi",
   "version": "1.0.2",
   "description": "Dependency Injection container for TypeScript",
-  "main": "dist/rr-tsdi-v1.0.1.js",
+  "main": "dist/rr-tsdi-v1.0.2.js",
   "types": "dist/index.d.ts",
-  "watch": {
-    "lint": "src/**/*.ts"
-  },
   "scripts": {
-    "build": "webpack",
+    "dev": "webpack-dev-server --open",
+    "build": "npm run clean && webpack",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "watch": "npm-watch",
-    "report-coverage": "cat ./coverage/lcov.info | coveralls"
+    "lint:tsfmt": "tsfmt --verify src/injector/injector.ts --verbose",
+    "report-coverage": "cat ./coverage/lcov.info | coveralls",
+    "clean": "npm run clean:dist && npm run clean:coverage",
+    "clean:dist": "rimraf dist",
+    "clean:coverage": "rimraf coverage"
   },
   "jest": {
     "transform": {
@@ -48,10 +49,15 @@
     "@types/jest": "^22.1.0",
     "coveralls": "^3.0.0",
     "jest": "^22.1.4",
+    "rimraf": "^2.6.2",
     "ts-jest": "^22.0.1",
     "ts-loader": "^3.2.0",
     "tslint": "^5.9.1",
     "typescript": "^2.6.2",
-    "webpack": "^3.10.0"
+    "typescript-formatter": "^7.0.1",
+    "uglifyjs-webpack-plugin": "^1.1.6",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1",
+    "wrapper-webpack-plugin": "^1.0.0"
   }
 }

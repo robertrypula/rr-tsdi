@@ -1,4 +1,8 @@
 const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const WrapperPlugin = require('wrapper-webpack-plugin');
+const { readFileSync } = require("fs");
+const LICENCE = readFileSync(path.resolve(__dirname) + '/LICENCE');
 
 module.exports = {
   entry: './src/index.ts',
@@ -12,6 +16,12 @@ module.exports = {
       }
     ]
   },
+  devServer: {
+    contentBase: path.resolve(__dirname),
+    compress: true,
+    port: 9000,
+    openPage: 'example/index.html'
+  },
   resolve: {
     extensions: [ '.ts', 'js' ]
   },
@@ -20,5 +30,13 @@ module.exports = {
     library: 'RrTsdi',
     libraryTarget: 'umd',
     path: path.resolve(__dirname, 'dist')
-  }
+  },
+  plugins: [
+    new UglifyJsPlugin({
+      // sourceMap: true
+    }),
+    new WrapperPlugin({
+      header: '/*\n' + LICENCE + '*/\n\n'
+    })
+  ]
 };
