@@ -70,10 +70,12 @@ const injectListJoin = (injectList: IArguments | any[]): string => {
   return result;
 };
 
+/* tslint:disable-next-line:only-arrow-functions */
 const wrapperFunction = function() {
   return injectListJoin(arguments);
 };
 
+/* tslint:disable-next-line:only-arrow-functions */
 const factoryFunction = function() {
   this.result = injectListJoin(arguments);
 };

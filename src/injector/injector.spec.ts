@@ -11,42 +11,44 @@ describe('injector', () => {
     expect(injector).toBeInstanceOf(Injector);
   });
 
-  it('should allow to register and retrieve a value', () => {
+  it('should properly handle value', () => {
     injector.registerValue('test', 'my value');
     expect(injector.get('test')).toBe('my value');
   });
 
-  it('should allow to register and retrieve a service', () => {
+  it('should properly handle service and keep only one instance of it', () => {
+    let serviceA;
+    let serviceB;
+
     injector.registerValue('value', 'some value');
     injector.registerService('service', Service);
 
-    const serviceA = injector.get('service');
-    const serviceB = injector.get('service');
+    serviceA = injector.get('service');
+    serviceB = injector.get('service');
 
     expect(serviceA).toBe(serviceB);
   });
 
-  it('should allow to register and retrieve a class', () => {
-    injector.registerValue('value', 'some value');
-    injector.registerClass('MyClass', MyClass);
+  it('should properly handle wrapped class (or factory function) with optional dependencies', () => {
+    let MyClass;
+    let myClass;
 
-    const MyClasss = injector.get('MyClass');
-    const myClass: any = new MyClasss('test');
+    injector.registerValue('value', 'some value');
+    injector.registerClass('MyClass', MyClassDiWrapper);
+
+    MyClass = injector.get('MyClass');
+    myClass = new MyClass('test');
 
     expect(myClass.getValue()).toBe('some value');
   });
+
+  it('should create one instance of a service only on demand (lazy loading)', () => {
+    // TODO test lazy loading
+  });
 });
 
-/*
-  p00: any, p01: any, p02: any, p03: any,
-  p04: any, p05: any, p06: any, p07: any,
-  p08: any, p09: any, p10: any, p11: any
-*/
-
 class Service {
-
   public static $inject: string[] = ['value'];
-
   private value: string;
 
   constructor(value: string) {
@@ -58,7 +60,8 @@ class Service {
   }
 }
 
-const MyClass: any = function _MyClass(value: string) {
+const MyClassDiWrapper: any = (value: string) => {
+  /* tslint:disable-next-line:max-classes-per-file no-shadowed-variable */
   class MyClass {
     public getValue(): string {
       return value;
@@ -67,4 +70,4 @@ const MyClass: any = function _MyClass(value: string) {
 
   return MyClass;
 };
-MyClass.$inject = ['value'];
+MyClassDiWrapper.$inject = ['value'];
