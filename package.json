@@ -6,11 +6,12 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "webpack-dev-server --open",
-    "build": "npm run clean && npm run test && npm run lint && webpack",
+    "build": "npm run clean && npm run test && npm run lint && lint:tsfmt:verify && webpack",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "lint:tsfmt": "tsfmt --verify src/injector/injector.ts --verbose",
+    "lint:tsfmt:verify": "tsfmt --verify --no-tsfmt --no-tslint --no-tsconfig --no-vscode",
+    "lint:tsfmt:replace": "tsfmt --replace --no-tsfmt --no-tslint --no-tsconfig --no-vscode",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "clean": "rimraf dist && rimraf coverage"
   },

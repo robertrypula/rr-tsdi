@@ -18,12 +18,18 @@ module.exports = {
   },
   devServer: {
     contentBase: path.resolve(__dirname),
+    publicPath: '/dist/',
     compress: true,
     port: 9000,
-    openPage: 'example/index.html'
+    hot: false,
+    openPage: 'example/index.html',
+    overlay: true
   },
   resolve: {
-    extensions: [ '.ts', 'js' ]
+    extensions: [
+      '.ts',
+      '.js'
+    ]
   },
   output: {
     filename: 'rr-tsdi-v1.0.2.js',
@@ -32,9 +38,9 @@ module.exports = {
     path: path.resolve(__dirname, 'dist')
   },
   plugins: [
-    new UglifyJsPlugin({
-      // sourceMap: true
-    }),
+    // new UglifyJsPlugin({
+    //   sourceMap: true
+    // }),
     new WrapperPlugin({
       header: '/*\n' + LICENCE + '*/\n\n'
     })
