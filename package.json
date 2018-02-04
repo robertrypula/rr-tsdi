@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "webpack-dev-server --open",
-    "build": "npm run clean && npm run test && npm run lint && lint:tsfmt:verify && webpack",
+    "build": "npm run clean && npm run test && npm run lint && npm run lint:tsfmt:verify && webpack",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
