@@ -1,13 +1,13 @@
+const webpack = require('webpack');
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const WrapperPlugin = require('wrapper-webpack-plugin');
 const { readFileSync } = require('fs');
 const LICENCE = readFileSync(path.resolve(__dirname) + '/LICENCE');
-let config;
 
 // TODO read version from code and name from package.json
 
-function getConfig() {
+function getConfig(env) {
   return {
     module: {
       rules: [
@@ -28,6 +28,10 @@ function getConfig() {
       path: path.resolve(__dirname, 'dist')
     },
     plugins: [
+      new webpack.DefinePlugin({
+        DEVELOPMENT: JSON.stringify(env.DEV === true),
+        PRODUCTION: JSON.stringify(env.PROD === true)
+      }),
       new WrapperPlugin({
         header: '/*\n' + LICENCE + '*/\n\n'
       })
@@ -72,8 +76,20 @@ function fillProd(config) {
   );
 }
 
-config = getConfig();
-fillDev(config);
-// fillProd(config);
+module.exports = (env) => {
+  const config = getConfig(env);
 
-module.exports = config;
+  console.log(env);
+
+  if (env.DEV === true) {
+    console.log('DEV');
+    fillDev(config);
+  } else if (env.PROD === true) {
+    console.log('PROD');
+    fillProd(config);
+  } else {
+    console.log('TEST');
+  }
+
+  return config;
+}

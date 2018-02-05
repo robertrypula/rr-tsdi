@@ -5,8 +5,8 @@
   "main": "dist/rr-tsdi-v1.0.3.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "dev": "npm run clean && webpack-dev-server --open",
-    "build": "npm run clean && npm run test && npm run lint && npm run lint:tsfmt:verify && webpack",
+    "dev": "npm run clean && webpack-dev-server --env.DEV --open",
+    "build": "npm run clean && npm run test && npm run lint && npm run lint:tsfmt:verify && webpack --env.PROD",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
