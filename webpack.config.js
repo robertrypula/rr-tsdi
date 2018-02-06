@@ -29,8 +29,8 @@ function getConfig(env) {
     },
     plugins: [
       new webpack.DefinePlugin({
-        DEVELOPMENT: JSON.stringify(env.DEV === true),
-        PRODUCTION: JSON.stringify(env.PROD === true)
+        DEVELOPMENT: JSON.stringify(env.DEVELOPMENT === true),
+        PRODUCTION: JSON.stringify(env.PRODUCTION === true)
       }),
       new WrapperPlugin({
         header: '/*\n' + LICENCE + '*/\n\n'
@@ -81,14 +81,15 @@ module.exports = (env) => {
 
   console.log(env);
 
-  if (env.DEV === true) {
+  if (env.DEVELOPMENT === true) {
     console.log('DEV');
     fillDev(config);
-  } else if (env.PROD === true) {
+  } else if (env.PRODUCTION === true) {
     console.log('PROD');
     fillProd(config);
   } else {
     console.log('TEST');
+    throw 'Please set the environment!';
   }
 
   return config;

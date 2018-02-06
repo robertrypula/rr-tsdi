@@ -1,5 +1,5 @@
 import staticImplements from './static-implements/static-implements';
 
-export const version = '1.0.3';
+export { version } from './version';
 export { Injector, InjectorInterface, InjectorStatic } from './injector/injector';
 export { staticImplements };

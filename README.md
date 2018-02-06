@@ -3,8 +3,7 @@
 [![Build Status](https://travis-ci.org/robertrypula/rr-tsdi.svg?branch=master)](https://travis-ci.org/robertrypula/rr-tsdi)
 [![Coverage Status](https://coveralls.io/repos/github/robertrypula/rr-tsdi/badge.svg?branch=master)](https://coveralls.io/github/robertrypula/rr-tsdi?branch=master)
 
-This library is very simple implementation of Dependency Injection
-written in TypeScript.
+This library is very simple implementation of Dependency Injection written in TypeScript.
 
 ## Installation
 
