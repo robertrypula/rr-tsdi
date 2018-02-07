@@ -1,10 +1,10 @@
 # RrTsdi
 
+[![npm version](https://badge.fury.io/js/rr-tsdi.svg)](https://badge.fury.io/js/rr-tsdi)
 [![Build Status](https://travis-ci.org/robertrypula/rr-tsdi.svg?branch=master)](https://travis-ci.org/robertrypula/rr-tsdi)
 [![Coverage Status](https://coveralls.io/repos/github/robertrypula/rr-tsdi/badge.svg?branch=master)](https://coveralls.io/github/robertrypula/rr-tsdi?branch=master)
 
-This library is very simple implementation of Dependency Injection
-written in TypeScript.
+This library is very simple implementation of Dependency Injection written in TypeScript.
 
 ## Installation
 
@@ -17,9 +17,9 @@ npm install rr-tsdi --save
 ## Usage (TypeScript)
 
 ```typescript
-import { Injector, InjectorInterface } from './injector';
+import { Injector } from './injector';
 
-const injector: InjectorInterface = new Injector();
+const injector: Injector = new Injector();
 
 // ----------------------------
 
@@ -38,8 +38,10 @@ class Util {
     this.config = config;
   }
 
-  login(): void {
-    alert(this.config.login + ' ' + this.config.password);
+  login(): string {
+    const test = this.config.login + ' ' + this.config.password;
+
+    return test;
   }
 }
 
@@ -82,7 +84,9 @@ function Util(config) {
 Util.$inject = [CONFIG];
 
 Util.prototype.login = function () {
-  alert(this.config.login + ' ' + this.config.password);
+  var test = this.config.login + ' ' + this.config.password;
+
+  return test;
 }
 
 injector.registerService(UTIL, Util);
@@ -100,7 +104,7 @@ injector.registerValue(CONFIG, config);
 
 var util = injector.get(UTIL);
 
-util.login();
+document.write(util.login());
 ```
 
 ## Licence

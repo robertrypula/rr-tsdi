@@ -2,11 +2,16 @@
   "name": "rr-tsdi",
   "version": "1.0.2",
   "description": "Dependency Injection container for TypeScript",
-  "main": "dist/rr-tsdi-v1.0.2.js",
-  "types": "dist/index.d.ts",
+  "keywords": [
+    "Dependency Injection",
+    "IoC",
+    "TypeScript"
+  ],
+  "author": "Robert Rypuła",
+  "license": "MIT",
   "scripts": {
-    "dev": "webpack-dev-server --open",
-    "build": "npm run clean && npm run test && npm run lint && npm run lint:tsfmt:verify && webpack",
+    "dev": "npm run clean && webpack-dev-server --env.DEVELOPMENT --open",
+    "build": "npm run clean && npm run test && npm run lint && npm run lint:tsfmt:verify && webpack --env.PRODUCTION",
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watch",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
@@ -14,6 +19,18 @@
     "lint:tsfmt:replace": "tsfmt --replace --no-tsfmt --no-tslint --no-tsconfig --no-vscode",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "clean": "rimraf dist && rimraf coverage"
+  },
+  "main": "dist/rr-tsdi-v1.0.3.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robertrypula/rr-tsdi.git"
+  },
+  "bugs": {
+    "url": "https://github.com/robertrypula/rr-tsdi/issues"
   },
   "jest": {
     "transform": {
@@ -30,24 +47,11 @@
     ],
     "testEnvironment": "node"
   },
-  "author": "Robert Rypuła",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/robertrypula/rr-tsdi.git"
-  },
-  "bugs": {
-    "url": "https://github.com/robertrypula/rr-tsdi/issues"
-  },
-  "keywords": [
-    "Dependency Injection",
-    "IoC",
-    "TypeScript"
-  ],
   "devDependencies": {
     "@types/jest": "^22.1.0",
     "coveralls": "^3.0.0",
     "jest": "^22.1.4",
+    "markdown-to-html": "0.0.13",
     "rimraf": "^2.6.2",
     "ts-jest": "^22.0.1",
     "ts-loader": "^3.2.0",
