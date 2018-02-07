@@ -3,9 +3,29 @@ const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const WrapperPlugin = require('wrapper-webpack-plugin');
 const { readFileSync } = require('fs');
-const LICENCE = readFileSync(path.resolve(__dirname) + '/LICENCE');
+const packageJson = require('./package.json');
+const packageName = packageJson.name;
+const libraryName = getLibraryName(packageName);
+const versionFileContent = readFileSync(path.resolve(__dirname) + '/src/version.ts', 'utf8');
+const version = getVersion(versionFileContent);
+const licence = readFileSync(path.resolve(__dirname) + '/LICENCE');
 
-// TODO read version from code and name from package.json
+function getLibraryName(packageName) {
+  return packageName
+    .toLowerCase()
+    .split('-')
+    .map(chunk => chunk.charAt(0).toUpperCase() + chunk.slice(1))
+    .join('');
+}
+
+function getVersion(versionFileContent) {
+  const patternStart = '= \'';
+
+  return versionFileContent.substring(
+    versionFileContent.indexOf(patternStart) + patternStart.length,
+    versionFileContent.indexOf('\';')
+  );
+}
 
 function getConfig(env) {
   return {
@@ -23,7 +43,7 @@ function getConfig(env) {
     },
     output: {
       filename: '[name].js',
-      library: 'RrTsdi',
+      library: libraryName,
       libraryTarget: 'umd',
       path: path.resolve(__dirname, 'dist')
     },
@@ -33,7 +53,7 @@ function getConfig(env) {
         PRODUCTION: JSON.stringify(env.PRODUCTION === true)
       }),
       new WrapperPlugin({
-        header: '/*\n' + LICENCE + '*/\n\n'
+        header: '/*\n' + licence + '*/\n\n'
       })
     ]
   };
@@ -41,7 +61,7 @@ function getConfig(env) {
 
 function fillDev(config) {
   config.entry = {
-    'rr-tsdi-v1.0.3': './src/index.ts'
+    [`${packageName}-v${version}`]: './src/index.ts'
   };
 
   config.devtool = 'inline-source-map';
@@ -62,8 +82,8 @@ function fillDev(config) {
 
 function fillProd(config) {
   config.entry = {
-    'rr-tsdi-v1.0.3': './src/index.ts',
-    'rr-tsdi-v1.0.3.min': './src/index.ts',
+    [`${packageName}-v${version}`]: './src/index.ts',
+    [`${packageName}-v${version}.min`]: './src/index.ts',
   };
 
   config.devtool = 'source-map';
@@ -79,16 +99,11 @@ function fillProd(config) {
 module.exports = (env) => {
   const config = getConfig(env);
 
-  console.log(env);
-
   if (env.DEVELOPMENT === true) {
-    console.log('DEV');
     fillDev(config);
   } else if (env.PRODUCTION === true) {
-    console.log('PROD');
     fillProd(config);
   } else {
-    console.log('TEST');
     throw 'Please set the environment!';
   }
 
