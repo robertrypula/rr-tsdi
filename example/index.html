@@ -16,6 +16,15 @@
 
     // ----------------------------
 
+    var config = {
+      login: 'john',
+      password: 'myp4$w0rd'
+    };
+
+    injector.registerValue(CONFIG, config);
+
+    // ----------------------------
+
     function Util(config) {
       this.config = config;
     }
@@ -29,15 +38,6 @@
     }
 
     injector.registerService(UTIL, Util);
-
-    // ----------------------------
-
-    var config = {
-      login: 'john',
-      password: 'myp4$w0rd'
-    };
-
-    injector.registerValue(CONFIG, config);
 
     // ----------------------------
 

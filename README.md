@@ -17,51 +17,52 @@ npm install rr-tsdi --save
 ## Usage (TypeScript)
 
 ```typescript
-import { Injector } from './injector';
-
-const injector: Injector = new Injector();
+const CONFIG = 'config';
+const UTIL = 'util';
 
 // ----------------------------
 
-const
-  CONFIG = 'config',
-  UTIL = 'util';
+interface IConfig {
+  login: string;
+  password: string;
+}
+
+const config: IConfig = {
+  login: 'mylogin',
+  password: 'myp4$w0rd'
+};
 
 // ----------------------------
 
 class Util {
+  public static $inject = [CONFIG];
+  private config: IConfig;
 
-  private config: any;
-  static $inject = [CONFIG];
-
-  constructor (config: any) {
+  constructor(config: IConfig) {
     this.config = config;
   }
 
-  login(): string {
+  public login(): string {
     const test = this.config.login + ' ' + this.config.password;
 
     return test;
   }
 }
 
-injector.registerService(UTIL, Util);
-
 // ----------------------------
 
-const config: any = {
-  login: 'john',
-  password: 'myp4$w0rd'
-};
+import { Injector } from 'rr-tsdi';
 
+const injector: Injector = new Injector();
+
+injector.registerService(UTIL, Util);
 injector.registerValue(CONFIG, config);
 
 // ----------------------------
 
 const util: Util = injector.get(UTIL);
 
-util.login();
-
+console.log(util.login());
 ```
 
 ## Usage directly in the browser (ES5)
@@ -74,6 +75,15 @@ var injector = new RrTsdi.Injector();
 var
   CONFIG = 'config',
   UTIL = 'util';
+
+// ----------------------------
+
+var config = {
+  login: 'john',
+  password: 'myp4$w0rd'
+};
+
+injector.registerValue(CONFIG, config);
 
 // ----------------------------
 
@@ -93,18 +103,54 @@ injector.registerService(UTIL, Util);
 
 // ----------------------------
 
-var config = {
-  login: 'john',
+var util = injector.get(UTIL);
+
+document.write(util.login());
+```
+
+## Usage in Node
+
+```javascript
+const CONFIG = 'config';
+const UTIL = 'util';
+
+// ----------------------------
+
+const config = {
+  login: 'mylogin',
   password: 'myp4$w0rd'
 };
 
+// ----------------------------
+
+class Util {
+  constructor(config) {
+    this.config = config;
+  }
+
+  login() {
+    const test = this.config.login + ' ' + this.config.password;
+
+    return test;
+  }
+}
+
+Util.$inject = [CONFIG];
+
+// ----------------------------
+
+const RrTsdi = require('rr-tsdi');
+const Injector = RrTsdi.Injector;
+const injector = new Injector();
+
+injector.registerService(UTIL, Util);
 injector.registerValue(CONFIG, config);
 
 // ----------------------------
 
-var util = injector.get(UTIL);
+const util = injector.get(UTIL);
 
-document.write(util.login());
+console.log(util.login());
 ```
 
 ## Licence
