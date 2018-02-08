@@ -1,6 +1,6 @@
 {
   "name": "rr-tsdi",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Dependency Injection container for TypeScript",
   "keywords": [
     "Dependency Injection",
