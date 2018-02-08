@@ -62,7 +62,7 @@ injector.registerValue(CONFIG, config);
 
 const util: Util = injector.get(UTIL);
 
-console.log(util.login());
+console.log(util.login()); // 'mylogin myp4$w0rd'
 ```
 
 ## Usage directly in the browser (ES5)
@@ -79,7 +79,7 @@ var
 // ----------------------------
 
 var config = {
-  login: 'john',
+  login: 'mylogin',
   password: 'myp4$w0rd'
 };
 
@@ -105,7 +105,7 @@ injector.registerService(UTIL, Util);
 
 var util = injector.get(UTIL);
 
-document.write(util.login());
+document.write(util.login()); // 'mylogin myp4$w0rd'
 ```
 
 ## Usage in Node
@@ -150,7 +150,7 @@ injector.registerValue(CONFIG, config);
 
 const util = injector.get(UTIL);
 
-console.log(util.login());
+console.log(util.login()); // 'mylogin myp4$w0rd'
 ```
 
 ## Licence
